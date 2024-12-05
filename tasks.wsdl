@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://www.example.org/tasks"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             targetNamespace="http://www.example.org/tasks"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+    <!-- Mensajes de entrada y salida -->
+    <message name="getAllTasksRequest"/>
+    <message name="getAllTasksResponse">
+        <part name="tasks" type="xsd:string"/>
+    </message>
+    
+    <message name="getTaskByIdRequest">
+        <part name="id" type="xsd:int"/>
+    </message>
+    <message name="getTaskByIdResponse">
+        <part name="task" type="xsd:string"/>
+    </message>
+
+    <message name="createTaskRequest">
+        <part name="title" type="xsd:string"/>
+        <part name="completed" type="xsd:boolean"/>
+    </message>
+    <message name="createTaskResponse">
+        <part name="id" type="xsd:int"/>
+        <part name="title" type="xsd:string"/>
+        <part name="completed" type="xsd:boolean"/>
+    </message>
+
+    <message name="updateTaskRequest">
+        <part name="id" type="xsd:int"/>
+        <part name="title" type="xsd:string"/>
+        <part name="completed" type="xsd:boolean"/>
+    </message>
+    <message name="updateTaskResponse">
+        <part name="id" type="xsd:int"/>
+        <part name="title" type="xsd:string"/>
+        <part name="completed" type="xsd:boolean"/>
+    </message>
+
+    <message name="deleteTaskRequest">
+        <part name="id" type="xsd:int"/>
+    </message>
+    <message name="deleteTaskResponse">
+        <part name="success" type="xsd:boolean"/>
+    </message>
+
+    <!-- Definición de las operaciones -->
+    <portType name="TaskPort">
+        <operation name="getAllTasks">
+            <input message="tns:getAllTasksRequest"/>
+            <output message="tns:getAllTasksResponse"/>
+        </operation>
+        <operation name="getTaskById">
+            <input message="tns:getTaskByIdRequest"/>
+            <output message="tns:getTaskByIdResponse"/>
+        </operation>
+        <operation name="createTask">
+            <input message="tns:createTaskRequest"/>
+            <output message="tns:createTaskResponse"/>
+        </operation>
+        <operation name="updateTask">
+            <input message="tns:updateTaskRequest"/>
+            <output message="tns:updateTaskResponse"/>
+        </operation>
+        <operation name="deleteTask">
+            <input message="tns:deleteTaskRequest"/>
+            <output message="tns:deleteTaskResponse"/>
+        </operation>
+    </portType>
+
+    <!-- Vinculación de las operaciones al estilo SOAP -->
+    <binding name="TaskBinding" type="tns:TaskPort">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        
+        <operation name="getAllTasks">
+            <soap:operation soapAction="http://www.example.org/tasks#getAllTasks"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="getTaskById">
+            <soap:operation soapAction="http://www.example.org/tasks#getTaskById"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="createTask">
+            <soap:operation soapAction="http://www.example.org/tasks#createTask"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="updateTask">
+            <soap:operation soapAction="http://www.example.org/tasks#updateTask"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="deleteTask">
+            <soap:operation soapAction="http://www.example.org/tasks#deleteTask"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <!-- Servicio y la URL del servicio -->
+    <service name="TaskService">
+        <port name="TaskPort" binding="tns:TaskBinding">
+            <soap:address location="http://localhost:4000/tasks"/>
+        </port>
+    </service>
+
+</definitions>
